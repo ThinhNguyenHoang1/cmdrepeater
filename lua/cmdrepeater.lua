@@ -29,6 +29,31 @@ M.add_cmd = function(pos, cmd)
 	end
 end
 
+M.fill_cmd = function(cmd)
+	local cwd = vim.fn.getcwd()
+	local project_cfg = CmdRepeaterConfig.projects[cwd]
+	local cmd_table = project_cfg.cmds or {}
+	local p = nil
+	local count = 0
+	for i, v in pairs(cmd_table) do
+		if cmd_table[i] == nil or cmd_table[i] == "" then
+			p = i
+			break
+		end
+		count = count + 1
+	end
+	if count == 0 then
+		if p == nil then
+			p = 1
+		end
+	else
+		if p == nil then
+			p = count + 1
+		end
+	end
+	M.add_cmd(p, cmd)
+end
+
 M.change_cmd = function(pos, new_cmd)
 	local cwd = vim.fn.getcwd()
 	local project_cfg = CmdRepeaterConfig.projects[cwd]

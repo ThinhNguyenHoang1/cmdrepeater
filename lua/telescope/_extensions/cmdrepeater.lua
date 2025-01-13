@@ -77,6 +77,20 @@ return require("telescope").register_extension({
 							cmdrepeater.clear(pos)
 						end)
 
+						map({ "i", "n" }, "<C-a>", function(_prompt_bufnr)
+							local picker = action_state.get_current_picker(prompt_bufnr)
+							local selections = picker:get_multi_selection()
+							if next(selections) == nil then
+								selections = { picker:get_selection() }
+							end
+							actions.close(prompt_bufnr)
+
+							vim.notify(inspect(action_state.get_selected_entry()))
+							local pos = action_state.get_selected_entry()["index"] or 1
+							local cmdstr = vim.fn.input("cmd:", "")
+							cmdrepeater.fill_cmd(cmdstr)
+						end)
+
 						return true
 					end,
 				})
