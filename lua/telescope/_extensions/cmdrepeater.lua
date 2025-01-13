@@ -8,7 +8,7 @@ local make_entry = require("telescope.make_entry")
 local api = vim.api
 return require("telescope").register_extension({
 	exports = {
-		cmdrepeater = function(opts)
+		pickcmds = function(opts)
 			opts = opts or {}
 			opts.cwd = opts.cwd or vim.fn.getcwd()
 
