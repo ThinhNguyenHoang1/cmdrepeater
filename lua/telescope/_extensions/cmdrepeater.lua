@@ -2,7 +2,6 @@ local inspect = require("inspect")
 return require("telescope").register_extension({
 	exports = {
 		pickcmds = function(opts)
-			local utils = require("telescope.utils")
 			local action_state = require("telescope.actions.state")
 			local actions = require("telescope.actions")
 			local finders = require("telescope.finders")
@@ -17,11 +16,6 @@ return require("telescope").register_extension({
 
 			local string_entry_maker = make_entry.gen_from_string()
 			opts.entry_maker = string_entry_maker
-			vim.notify("Current commands")
-			for index, data in ipairs(cmd_table) do
-				vim.notify("CMD@" .. index)
-				vim.notify(data)
-			end
 			pickers
 				.new(opts, {
 					prompt_title = "Remember Commands",
@@ -37,7 +31,6 @@ return require("telescope").register_extension({
 							actions.close(prompt_bufnr)
 
 							local cmd = action_state.get_selected_entry()[1] or ""
-							vim.notify(inspect(cmd))
 							if require("toggleterm") then
 								require("toggleterm").exec(cmd)
 							else
@@ -58,7 +51,6 @@ return require("telescope").register_extension({
 							end
 							actions.close(prompt_bufnr)
 
-							vim.notify(inspect(action_state.get_selected_entry()))
 							if action_state.get_selected_entry() == nil then
 								return
 							end
@@ -75,7 +67,6 @@ return require("telescope").register_extension({
 							end
 							actions.close(prompt_bufnr)
 
-							vim.notify(inspect(action_state.get_selected_entry()))
 							if action_state.get_selected_entry() == nil then
 								return
 							end

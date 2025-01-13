@@ -11,7 +11,7 @@ local CmdRepeaterConfig = {}
 local M = {}
 
 M.get_cmd_table = function()
-	vim.notify(inspect(CmdRepeaterConfig))
+	-- vim.notify(inspect(CmdRepeaterConfig))
 
 	local cwd = vim.fn.getcwd()
 	local project_cfg = CmdRepeaterConfig.projects[cwd]
@@ -105,7 +105,7 @@ local function read_config(local_config)
 end
 
 M.save = function()
-	vim.notify("save(): Saving cache config to" .. cache_config)
+	-- vim.notify("save(): Saving cache config to" .. cache_config)
 	Path:new(cache_config):write(vim.fn.json_encode(CmdRepeaterConfig), "w")
 end
 
