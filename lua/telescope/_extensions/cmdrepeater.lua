@@ -36,7 +36,7 @@ return require("telescope").register_extension({
 							end
 							actions.close(prompt_bufnr)
 
-							local cmd = action_state.get_selected_entry() or ""
+							local cmd = action_state.get_selected_entry()[1] or ""
 							vim.notify(inspect(cmd))
 							if require("toggleterm") then
 								require("toggleterm").exec(cmd)
