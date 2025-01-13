@@ -51,8 +51,20 @@ return require("telescope").register_extension({
 
 						-- Change The Saved Command At location
 						map({ "i", "n" }, "<C-r>", function(_prompt_bufnr)
-							print("You typed <C-r>")
+							local picker = action_state.get_current_picker(prompt_bufnr)
+							local selections = picker:get_multi_selection()
+							if next(selections) == nil then
+								selections = { picker:get_selection() }
+							end
+							-- actions.close(prompt_bufnr)
 
+							vim.notify(inspect(action_state.get_selected_entry()))
+							local pos = action_state.get_selected_entry()["index"] or 1
+							local cmdstr = vim.fn.input("cmd:", "")
+							cmdrepeater.change_cmd(pos, cmdstr)
+						end)
+
+						map({ "i", "n" }, "<C-x>", function(_prompt_bufnr)
 							local picker = action_state.get_current_picker(prompt_bufnr)
 							local selections = picker:get_multi_selection()
 							if next(selections) == nil then
@@ -62,8 +74,7 @@ return require("telescope").register_extension({
 
 							vim.notify(inspect(action_state.get_selected_entry()))
 							local pos = action_state.get_selected_entry()["index"] or 1
-							local cmdstr = vim.fn.input("cmd:", "")
-							cmdrepeater.change_cmd(pos, cmdstr)
+							cmdrepeater.clear(pos)
 						end)
 
 						return true
