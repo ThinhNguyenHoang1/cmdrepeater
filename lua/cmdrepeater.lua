@@ -62,7 +62,8 @@ M.save = function()
 end
 
 local function expand_dir(config)
-	local projects = config.projects or {}
+	c = config or {}
+	local projects = c.projects or {}
 	for k in pairs(projects) do
 		local expanded_path = Path.new(k):expand()
 		projects[expanded_path] = projects[k]
@@ -70,7 +71,7 @@ local function expand_dir(config)
 			projects[k] = nil
 		end
 	end
-	return config
+	return c
 end
 function M.setup(config)
 	-- TODO: Get configs / commands from projects config / task files
@@ -98,7 +99,6 @@ function M.setup(config)
 			["save_on_toggle"] = false,
 			["save_on_change"] = true,
 		},
-		cmds = {},
 	}, expand_dir(c_config), expand_dir(u_config), expand_dir(config))
 	CmdRepeaterConfig = complete_config
 end
