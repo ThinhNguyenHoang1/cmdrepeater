@@ -61,7 +61,7 @@ return require("telescope").register_extension({
 							actions.close(prompt_bufnr)
 
 							vim.notify(inspect(action_state.get_selected_entry()))
-							local pos = action_state.get_selected_entry()[2] or ""
+							local pos = action_state.get_selected_entry()["index"] or 1
 							local cmdstr = vim.fn.input("cmd:", "")
 							cmdrepeater.change_cmd(pos, cmdstr)
 						end)
