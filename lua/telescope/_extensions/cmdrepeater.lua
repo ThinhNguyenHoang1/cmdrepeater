@@ -56,7 +56,7 @@ return require("telescope").register_extension({
 							if next(selections) == nil then
 								selections = { picker:get_selection() }
 							end
-							-- actions.close(prompt_bufnr)
+							actions.close(prompt_bufnr)
 
 							vim.notify(inspect(action_state.get_selected_entry()))
 							local pos = action_state.get_selected_entry()["index"] or 1
