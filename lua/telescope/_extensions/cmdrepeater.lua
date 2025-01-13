@@ -13,6 +13,7 @@ return require("telescope").register_extension({
 
 			opts = opts or {}
 			opts.cwd = opts.cwd or vim.fn.getcwd()
+			opts.clear_before_exec = opts.clear_before_exec or true
 
 			local string_entry_maker = make_entry.gen_from_string()
 			opts.entry_maker = string_entry_maker
@@ -33,9 +34,13 @@ return require("telescope").register_extension({
 							local cmd = action_state.get_selected_entry()[1] or ""
 							if require("toggleterm") then
 								local tt = require("toggleterm")
-								local is_windows = vim.fn.has("win32") == 1
-								local clear = is_windows and " > NUL;" or " > /dev/null;"
-								tt.exec(clear)
+								if opts.clear_before_exec then
+									local is_windows = vim.fn.has("win32") == 1
+									local clear = is_windows and " > NUL;" or " > /dev/null;"
+									local clean = is_windows and "cls" or "clear"
+									tt.exec(clear)
+									tt.exec(clean)
+								end
 								tt.exec(cmd)
 							else
 								vim.api.nvim_command(":1Tclear")
