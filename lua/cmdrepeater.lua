@@ -106,9 +106,7 @@ function M.setup(config)
 			"",
 		}
 		project_cfg.cmds = cmd_table
-	else
-
-
+	end
 end
 
 M.setup()
