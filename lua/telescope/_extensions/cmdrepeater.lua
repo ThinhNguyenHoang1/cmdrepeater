@@ -32,7 +32,11 @@ return require("telescope").register_extension({
 
 							local cmd = action_state.get_selected_entry()[1] or ""
 							if require("toggleterm") then
-								require("toggleterm").exec(cmd)
+								local tt = require("toggleterm")
+								local is_windows = vim.fn.has("win32") == 1
+								local clear = is_windows and " > NUL;" or " > /dev/null;"
+								tt.exec(clear)
+								tt.exec(cmd)
 							else
 								vim.api.nvim_command(":1Tclear")
 								vim.api.nvim_command(":1T " .. cmd)
