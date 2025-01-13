@@ -29,6 +29,16 @@ M.add_cmd = function(pos, cmd)
 	end
 end
 
+M.change_cmd = function(pos, new_cmd)
+	local cwd = vim.fn.getcwd()
+	local project_cfg = CmdRepeaterConfig.projects[cwd]
+
+	project_cfg.cmds[pos] = new_cmd
+	if CmdRepeaterConfig.global_settings.save_on_change then
+		M.save()
+	end
+end
+
 M.clear = function(pos)
 	local cwd = vim.fn.getcwd()
 	local project_cfg = CmdRepeaterConfig.projects[cwd]
