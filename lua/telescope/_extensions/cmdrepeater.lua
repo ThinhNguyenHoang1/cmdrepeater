@@ -1,3 +1,4 @@
+local inspect = require("inspect")
 return require("telescope").register_extension({
 	exports = {
 		pickcmds = function(opts)
@@ -36,7 +37,7 @@ return require("telescope").register_extension({
 							actions.close(prompt_bufnr)
 
 							local cmd = action_state.get_selected_entry() or ""
-							vim.notify("Exec@" .. cmd)
+							vim.notify(inspect(cmd))
 							if require("toggleterm") then
 								require("toggleterm").exec(cmd)
 							else
