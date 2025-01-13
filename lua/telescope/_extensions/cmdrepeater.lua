@@ -59,6 +59,9 @@ return require("telescope").register_extension({
 							actions.close(prompt_bufnr)
 
 							vim.notify(inspect(action_state.get_selected_entry()))
+							if action_state.get_selected_entry() == nil then
+								return
+							end
 							local pos = action_state.get_selected_entry()["index"] or 1
 							local cmdstr = vim.fn.input("cmd:", "")
 							cmdrepeater.change_cmd(pos, cmdstr)
@@ -73,6 +76,10 @@ return require("telescope").register_extension({
 							actions.close(prompt_bufnr)
 
 							vim.notify(inspect(action_state.get_selected_entry()))
+							if action_state.get_selected_entry() == nil then
+								return
+							end
+
 							local pos = action_state.get_selected_entry()["index"] or 1
 							cmdrepeater.clear(pos)
 						end)
@@ -85,8 +92,6 @@ return require("telescope").register_extension({
 							end
 							actions.close(prompt_bufnr)
 
-							vim.notify(inspect(action_state.get_selected_entry()))
-							local pos = action_state.get_selected_entry()["index"] or 1
 							local cmdstr = vim.fn.input("cmd:", "")
 							cmdrepeater.fill_cmd(cmdstr)
 						end)
