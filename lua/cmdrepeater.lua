@@ -99,13 +99,14 @@ function M.setup(config)
 
 	local cwd = vim.fn.getcwd()
 	local project_cfg = CmdRepeaterConfig.projects[cwd]
-	if project_cfg.cmds == nil then
+	if project_cfg == nil or project_cfg.cmds == nil then
 		local cmd_table = {
 			"",
 			"",
 			"",
 		}
-		project_cfg.cmds = cmd_table
+		project_cfg[cwd] = {}
+		project_cfg[cwd].cmds = cmd_table
 	end
 end
 
