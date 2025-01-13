@@ -1,14 +1,14 @@
-local action_state = require("telescope.actions.state")
-local actions = require("telescope.actions")
-local finders = require("telescope.finders")
-local pickers = require("telescope.pickers")
-local utils = require("telescope.utils")
-local sorters = require("telescope.sorters")
-local make_entry = require("telescope.make_entry")
-local api = vim.api
 return require("telescope").register_extension({
 	exports = {
 		pickcmds = function(opts)
+			local utils = require("telescope.utils")
+			local action_state = require("telescope.actions.state")
+			local actions = require("telescope.actions")
+			local finders = require("telescope.finders")
+			local pickers = require("telescope.pickers")
+			local sorters = require("telescope.sorters")
+			local make_entry = require("telescope.make_entry")
+
 			opts = opts or {}
 			opts.cwd = opts.cwd or vim.fn.getcwd()
 
