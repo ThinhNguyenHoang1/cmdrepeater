@@ -75,12 +75,6 @@ local function expand_dir(config)
 end
 function M.setup(config)
 	-- TODO: Get configs / commands from projects config / task files
-	cmd_table = {
-		"",
-		"",
-		"",
-	}
-
 	local ok, u_config = pcall(read_config, user_config)
 
 	if not ok then
@@ -100,7 +94,21 @@ function M.setup(config)
 			["save_on_change"] = true,
 		},
 	}, expand_dir(c_config), expand_dir(u_config), expand_dir(config))
+
 	CmdRepeaterConfig = complete_config
+
+	local cwd = vim.fn.getcwd()
+	local project_cfg = CmdRepeaterConfig[cwd]
+	if project_cfg.cmds == nil then
+		local cmd_table = {
+			"",
+			"",
+			"",
+		}
+		project_cfg.cmds = cmd_table
+	else
+
+
 end
 
 M.setup()
