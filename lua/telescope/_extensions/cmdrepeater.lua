@@ -14,10 +14,10 @@ return require("telescope").register_extension({
 
 			local string_entry_maker = make_entry.gen_from_string()
 			opts.entry_maker = string_entry_maker
-			utils.log("Current commands")
+			vim.notify("Current commands")
 			for index, data in ipairs(vim.g.thinh_remembered_commands) do
-				utils.log("CMD@" .. index)
-				utils.log(data)
+				vim.notify("CMD@" .. index)
+				vim.notify(data)
 			end
 			pickers
 				.new(opts, {
