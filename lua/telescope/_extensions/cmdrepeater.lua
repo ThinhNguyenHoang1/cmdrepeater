@@ -8,6 +8,8 @@ return require("telescope").register_extension({
 			local pickers = require("telescope.pickers")
 			local sorters = require("telescope.sorters")
 			local make_entry = require("telescope.make_entry")
+			local cmdrepeater = require("cmdrepeater")
+			cmd_table = cmdrepeater.get_cmd_table()
 
 			opts = opts or {}
 			opts.cwd = opts.cwd or vim.fn.getcwd()
@@ -15,14 +17,14 @@ return require("telescope").register_extension({
 			local string_entry_maker = make_entry.gen_from_string()
 			opts.entry_maker = string_entry_maker
 			vim.notify("Current commands")
-			for index, data in ipairs(vim.g.thinh_remembered_commands) do
+			for index, data in ipairs(cmd_table) do
 				vim.notify("CMD@" .. index)
 				vim.notify(data)
 			end
 			pickers
 				.new(opts, {
 					prompt_title = "Remember Commands",
-					finder = finders.new_table(vim.g.thinh_remembered_commands or {}),
+					finder = finders.new_table(cmd_table or {}),
 					sorter = sorters.get_generic_fuzzy_sorter(),
 					attach_mappings = function(prompt_bufnr, map)
 						local insert_coauthors = function()
