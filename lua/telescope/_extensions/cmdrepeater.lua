@@ -14,10 +14,15 @@ return require("telescope").register_extension({
 
 			local string_entry_maker = make_entry.gen_from_string()
 			opts.entry_maker = string_entry_maker
+			utils.log("Current commands")
+			for index, data in ipairs(vim.g.thinh_remembered_commands) do
+				utils.log("CMD@" .. index)
+				utils.log(data)
+			end
 			pickers
 				.new(opts, {
 					prompt_title = "Remember Commands",
-					finder = finders.new_table(vim.g.thinh_remembered_commands),
+					finder = finders.new_table(vim.g.thinh_remembered_commands or {}),
 					sorter = sorters.get_generic_fuzzy_sorter(),
 					attach_mappings = function(prompt_bufnr, map)
 						local insert_coauthors = function()
