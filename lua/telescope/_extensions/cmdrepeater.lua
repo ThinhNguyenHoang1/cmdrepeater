@@ -27,7 +27,7 @@ return require("telescope").register_extension({
 					finder = finders.new_table(cmd_table or {}),
 					sorter = sorters.get_generic_fuzzy_sorter(),
 					attach_mappings = function(prompt_bufnr, map)
-						local insert_coauthors = function()
+						local try_exec_command = function()
 							local picker = action_state.get_current_picker(prompt_bufnr)
 							local selections = picker:get_multi_selection()
 							if next(selections) == nil then
@@ -35,15 +35,17 @@ return require("telescope").register_extension({
 							end
 							actions.close(prompt_bufnr)
 
-							-- local coauthors = { "", "" }
-							-- for _, c in ipairs(selections) do
-							--   table.insert(coauthors, "Co-authored-by: " .. c[1])
-							-- end
-							-- api.nvim_put(coauthors, "l", true, false)
+							local coauthors = { "", "" }
+							for _, c in ipairs(selections) do
+								table.insert(coauthors, "Co-authored-by: " .. c[1])
+							end
+							cmd = action_state.get_selected_entry() or ""
+							vim.notify("Exec@" .. cmd)
+							vim.api.nvim_command(":TermExec " .. cmd)
 						end
 
-						map("i", "<CR>", insert_coauthors)
-						map("n", "<CR>", insert_coauthors)
+						map("i", "<CR>", try_exec_command)
+						map("n", "<CR>", try_exec_command)
 
 						return true
 					end,
