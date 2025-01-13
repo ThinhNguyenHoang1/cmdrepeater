@@ -9,7 +9,7 @@ return require("telescope").register_extension({
 			local sorters = require("telescope.sorters")
 			local make_entry = require("telescope.make_entry")
 			local cmdrepeater = require("cmdrepeater")
-			cmd_table = cmdrepeater.get_cmd_table()
+			local cmd_table = cmdrepeater.get_cmd_table()
 
 			opts = opts or {}
 			opts.cwd = opts.cwd or vim.fn.getcwd()
@@ -35,11 +35,7 @@ return require("telescope").register_extension({
 							end
 							actions.close(prompt_bufnr)
 
-							local coauthors = { "", "" }
-							for _, c in ipairs(selections) do
-								table.insert(coauthors, "Co-authored-by: " .. c[1])
-							end
-							cmd = action_state.get_selected_entry() or ""
+							local cmd = action_state.get_selected_entry() or ""
 							vim.notify("Exec@" .. cmd)
 							if require("toggleterm") then
 								require("toggleterm").exec(cmd)
