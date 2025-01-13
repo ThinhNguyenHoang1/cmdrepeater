@@ -14,14 +14,14 @@ M.get_cmd_table = function()
 	vim.notify(inspect(CmdRepeaterConfig))
 
 	local cwd = vim.fn.getcwd()
-	local project_cfg = CmdRepeaterConfig[cwd]
+	local project_cfg = CmdRepeaterConfig.projects[cwd]
 
 	return project_cfg.cmds
 end
 
 M.add_cmd = function(pos, cmd)
 	local cwd = vim.fn.getcwd()
-	local project_cfg = CmdRepeaterConfig[cwd]
+	local project_cfg = CmdRepeaterConfig.projects[cwd]
 
 	project_cfg.cmds[pos] = cmd
 	if CmdRepeaterConfig.global_settings.save_on_change then
@@ -98,7 +98,7 @@ function M.setup(config)
 	CmdRepeaterConfig = complete_config
 
 	local cwd = vim.fn.getcwd()
-	local project_cfg = CmdRepeaterConfig[cwd] or {}
+	local project_cfg = CmdRepeaterConfig.projects[cwd]
 	if project_cfg.cmds == nil then
 		local cmd_table = {
 			"",
