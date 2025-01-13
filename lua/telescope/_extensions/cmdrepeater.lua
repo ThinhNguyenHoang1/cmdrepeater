@@ -41,7 +41,12 @@ return require("telescope").register_extension({
 							end
 							cmd = action_state.get_selected_entry() or ""
 							vim.notify("Exec@" .. cmd)
-							vim.api.nvim_command(":TermExec " .. cmd)
+							if require("toggleterm") then
+								require("toggleterm").exec(cmd)
+							else
+								vim.api.nvim_command(":1Tclear")
+								vim.api.nvim_command(":1T " .. cmd)
+							end
 						end
 
 						map("i", "<CR>", try_exec_command)
