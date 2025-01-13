@@ -29,6 +29,19 @@ M.add_cmd = function(pos, cmd)
 	end
 end
 
+M.clear = function(pos)
+	local cwd = vim.fn.getcwd()
+	local project_cfg = CmdRepeaterConfig.projects[cwd]
+	if pos then
+		project_cfg.cmds[pos] = ""
+	else
+		project_cfg.cmds = {}
+	end
+	if CmdRepeaterConfig.global_settings.save_on_change then
+		M.save()
+	end
+end
+
 -- tbl_deep_extend does not work the way you would think
 local function merge_table_impl(t1, t2)
 	for k, v in pairs(t2) do
